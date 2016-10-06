@@ -1,0 +1,456 @@
+<html>
+<head>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap.colorpickersliders.min.css">
+    <style type="text/css"><!--
+    body {
+        margin: 0px;
+        background: #15425D;
+        
+    }
+    .main-area td{
+        vertical-align: top;
+    }
+    table{
+        color: #15425D;
+    }
+    .stepsmore{
+        background: #ededed;
+        padding-top: 10px;
+        padding-bottom: 40px;
+    }
+    .param-panel {
+        padding: 10px;
+        font-size: 18px;
+        width: 300px;
+    }
+    .preview-panel {
+        text-align: center;
+        padding: 10px;
+    }
+    #frame{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    @font-face {
+        font-family: 'iconfont';
+        src: url('iconfont.eot'); /* IE9*/
+        src: url('iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('iconfont.woff') format('woff'), /* chrome、firefox */
+        url('iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+        url('iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+    }
+    .iconfont{
+        font-family:"iconfont" !important;
+        font-size:20px;
+        font-style:normal;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-stroke-width: 0.2px;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    #play{
+        float: right;
+        text-decoration: none;
+        margin-right: 10px;
+    }
+    #pause{
+        float: right;
+        text-decoration: none;
+    }
+    #frame-num{
+        float: right;
+        margin-right: 50px;
+        font-size: 20px;
+    }
+    .board{
+        padding: 15px;
+        font-size: 15px;
+        display: none;
+    }
+    .bord-item{
+        margin-bottom: 15px;
+    }
+    .size-input{
+        width: 30%;
+        float: left;
+    }
+    .size-diff{
+        width: 20%;
+        float: left;
+        text-align: center;
+    }
+    .layer-edit{
+        position: relative;
+        margin-left: 20px;
+        background-color: white;
+    }
+    .combination{
+        font-size: 14px;
+        background: #337ab7;
+        text-align: center;
+        padding: 40px;
+        color: white;
+        width: 900px;
+        margin: 40px auto 0 auto;
+    }
+    .comb-view{
+        width: 800px;
+        text-align: center;
+        margin:0 auto;
+        overflow: scroll;
+    }
+    .code-gen{
+        padding: 10px;
+        background: #337ab7;
+        text-align: center;
+        color: white;
+        width: 900px;
+        margin: 40px auto 0 auto;
+    }
+    .gen-area{
+        width: 660px;
+        margin: auto;
+    }
+    .layers-list{
+        width: 310px;
+        height: 660px;
+        float: left;
+        background: white;
+        padding: 10px;
+    }
+    .layers-list button:first-child{
+        margin-left: 20px;
+    }
+    .aircheck{
+        margin-top: 10px;
+        padding-left: 84px;
+    }
+    #layers-view img{
+        width: 160px;
+        height: 100px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 5px;
+    }
+    .nav a{
+        font-size: 14px;
+    }
+    #layers-view div{
+        font-size: 14px;
+    }
+    #layers-view div:first-child{
+        margin-top: 5px;
+    }
+
+    #layers-view .selected{
+        background: #337ab7;
+        color: white;
+    }
+    .cover{
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #337ab7;
+        color: white;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding-top: 30%;
+    }
+    .cover span{
+        font-size: 30px;
+    }
+    .line-blank{
+        height: 14px;
+    }
+    .main-area{
+    }
+    .setting{
+        color: white;
+        font-size: 16px;
+        padding: 10px;
+    }
+    .setting label{
+        padding-top: 6px;
+
+    }
+    .first-panel{
+        padding: 10px 10px 40px 10px;
+        background-color: #15425D;
+        color: #15425D;
+    }
+    .btn-panel2{
+        background: white;
+        color: #8a8c68;
+        margin-top: 10px;
+    }
+    .btn-panel3{
+        margin-top: 10px;
+        background: white;
+        color: #8a8c68;
+    }
+
+    canvas{
+        background: black;
+    }
+    .dotted-bottom{
+        padding: 10px 0;
+        border-bottom: 1px dotted #333333; 
+    }
+    --></style>
+</head>
+
+<body>
+    <div class="first-panel">
+        <div class="row setting">
+            <div class="col-md-3 text-center"></div>
+            <div class="col-md-1 text-right"><label>画布宽度: </label></div>
+            <div class="col-md-1"><input type="text" class="form-control" id="canvas-width"></div>
+            <div class="col-md-1 text-right"><label>画布高度: </label></div>
+            <div class="col-md-1"><input type="text" class="form-control" id="canvas-height"></div>
+            <div class="col-md-1 text-center"><button id="change-settings" class="btn btn-primary" type="button">应用</button></div>
+        </div>
+        <table class="clearfix main-area">
+            <tr>
+                <td>
+                    <div class="layers-list">
+                        <button type="button" id="add-layer" class="btn btn-primary" aria-label="Plus">
+                              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                        <button id="layer-up" type="button" class="btn btn-primary" aria-label="Up">
+                          <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                        </button>
+                        <button id="layer-down" type="button" class="btn btn-primary" aria-label="Down">
+                          <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                        </button>
+                        <button id="layer-del" type="button" class="btn btn-primary" aria-label="Trash">
+                          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button>
+                        <div id="layers-view">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <table class="layer-edit">
+                        <tr>
+                            <td>
+                                <div class="param-panel">
+                                <p>参数面板</p>
+                                <div>
+                                    <button id="common-area" class="btn btn-primary" type="button">通用</button>
+                                </div>
+                                <div id="common-params" class="board">
+                                    <div>开始帧数</div>
+                                    <input id="start-frame" type="text" class="form-control" value="0">
+                                </div>
+                                <br>
+                                <div>
+                                    <button id="particle-area" class="btn btn-primary" type="button">粒子</button>
+                                </div>
+                                <div id="particle-params" class="board">
+                                    <div class="dotted-bottom" id="age-prior1">
+                                    <div>
+                                        颜色RGB值
+                                    </div>
+                                    <input type="text" class="form-control" id="default" value="#00ffff">
+                                    </div>
+                                    <div class="line-blank"></div>
+                                    <div class="dotted-bottom" id="age-prior2">
+                                    <input type="checkbox" id="colorful" value="0" />彩色
+                                    </div>
+                                    <div class="line-blank"></div>
+                                    <div class="dotted-bottom" id="age-prior3">
+                                    <div>是否颜色衰减</div>
+                                    <label class="radio-inline">
+                                      <input type="radio" name="colorAge" id="colorAge1" value="0"> Yes
+                                    </label>
+                                    <label class="radio-inline">
+                                      <input type="radio" name="colorAge" id="colorAge2" value="1"> No
+                                    </label>
+                                    <input type="text" class="form-control" id="min-color" value="rgba(0,255,255,1)">
+                                    ~
+                                    <input type="text" class="form-control" id="max-color" value="rgba(0,255,255,0)">
+                                    </div>
+                                </div>
+                                <br>
+                                <div>
+                                <button id="emit-area" class="btn btn-primary" type="button">发射器</button>
+                                </div>
+                                <div id="emit-params" class="board">
+                                    <ul class="nav nav-pills nav-justified" id="emit-way">
+                                        <li role="presentation">
+                                            <a href="#point" data-i="0">点发射</a>
+                                        </li>
+                                        <li role="presentation">
+                                            <a href="#area" data-i="2">区域</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                          <div class="tab-pane active" id="point">
+                                            <div>
+                                                <p>发射器位置</p>
+                                                <div>
+                                                    x:
+                                                    <input id="x" type="range" min="0" max="100" value="50" />
+                                                </div>
+                                                <div>
+                                                    y:
+                                                    <input id="y" type="range" min="0" max="100" value="50" />
+                                                </div>
+                                            </div>
+                                            <div class="line-blank"></div>
+                                            <div>
+                                                <p>发射速度</p>
+                                                <div>
+                                                    x:
+                                                    <input id="speedX" type="range" min="0" max="4" value="1" />
+                                                </div>
+                                                <div>
+                                                    y:
+                                                    <input id="speedY" type="range" min="0" max="4" value="1" />
+                                                </div>
+                                            </div>
+                                            <div class="line-blank"></div>
+                                            <div> 大小 </div>
+                                            <div class="clearfix">
+                                                <div class="size-input"><input id="particle-minsize" type="text" class="form-control" value="4"></div>
+                                                <div class="size-diff"> ~ </div>
+                                                <div class="size-input"><input id="particle-maxsize" type="text" class="form-control" value="4"></div>
+                                            </div>
+                                            <div class="line-blank"></div>                   
+                                            <div>
+                                                发射密度:
+                                                <input id="density" type="range" min="1" max="10" value="1" />
+                                            </div>
+                                            <div class="line-blank"></div>
+                                            <div>生命周期</div>
+                                            <input id="life" type="text" class="form-control" value="100">
+                                        </div>
+                                        <div class="tab-pane" id="area">
+                                            <h5>上传png图片</h5>
+                                            <h6>（大小和画布大小保持一致，非透明部分即为发射区域）</h6>
+                                            <form id="png-form" enctype="multipart/form-data" method="post" action="/">
+                                                <input type="file" name="fileToUpload" id="fileToUpload"/>
+                                            </form>
+                                            <div> 大小 </div>
+                                            <div class="clearfix">
+                                                <div class="size-input"><input id="area-minsize" type="text" class="form-control" value="4"></div>
+                                                <div class="size-diff"> ~ </div>
+                                                <div class="size-input"><input id="area-maxsize" type="text" class="form-control" value="4"></div>
+                                            </div>
+                                            <div class="line-blank"></div>
+                                            <div>
+                                                <p>发射速度</p>
+                                                <div>
+                                                    x:
+                                                    <input id="area-speedX" type="range" min="0" max="40" value="10" />
+                                                </div>
+                                                <div>
+                                                    y:
+                                                    <input id="area-speedY" type="range" min="0" max="40" value="10" />
+                                                </div>
+                                            </div>
+                                            <div class="line-blank"></div>                  
+                                            <div>
+                                                发射密度:
+                                                <input id="area-density" type="range" min="1" max="40" value="1" />
+                                            </div>
+                                            <div class="line-blank"></div>
+                                            <div>生命周期</div>
+                                            <input id="area-life" type="text" class="form-control" value="100">
+                                        </div> 
+                                    </div>
+                                </div>
+                                <br/>
+                                <div>
+                                    <button id="air-area" class="btn btn-primary" type="button">风场</button>
+                                </div>
+                                <div id="air-params" class="board">
+                                    <div>
+                                        x:
+                                        <input id="xforce" type="range" min="-10" max="10" value="4" />
+                                    </div>
+                                    <div>
+                                        y:
+                                        <input id="yforce" type="range" min="-10" max="10" value="4" />
+                                    </div>
+                                    <div>
+                                        octaveCount:
+                                        <input id="octaveCount" type="range" min="0" max="10" value="7" />
+                                    </div>
+                                    <div>
+                                        persistence:
+                                        <input id="persistence" type="range" min="0" max="10" value="0" />
+                                    </div>
+                                    <div class="aircheck">
+                                        <button id="air-use" class="btn btn-primary" type="button">应用</button>
+                                        <button id="air-cancel" class="btn btn-primary" type="button">撤销</button>    
+                                    </div>
+                                </div>
+                            </div>
+                            </td>
+                            <td>
+                                <div class="preview-panel">
+                                    <canvas id="testCanvas">
+                                    </canvas>
+                                    <input id="frame" type="range" min="0" max="3000" value="0"/>
+                                    <button type="button" id="save-layer" class="btn btn-primary" aria-label="Save">
+                                      <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" id="pause" class="btn btn-primary" aria-label="Pause">
+                                      <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" id="play" class="btn btn-primary" aria-label="Play">
+                                      <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                                    </button>
+                                    <span id="frame-num">0</span>
+                                    <div class="cover">
+                                        <span>无选择图层</span>
+                                    </div>
+                                </div>
+                                
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+    <div class="stepsmore">
+        <div class="combination">
+            <div> <h3>总体预览</h3> </div>
+            <div class="comb-view">
+                <canvas id="combCanvas">
+                </canvas>
+            </div>
+            <div>
+                <button type="button" id="com-play" class="btn btn-panel2" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+                </button> 
+            </div>
+        </div>
+        <div class="code-gen">
+            <div><h3>代码生成</h3></div>
+            <div class="line-blank"></div>
+            <div class="gen-area">
+                <textarea id="pro-code" class="form-control" rows="20"></textarea>
+            </div>
+            <button type="button" id="gencode" class="btn btn-panel3" aria-label="Ok">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button> 
+        </div>
+    </div>
+    <script type="text/javascript" src="/build/2d_all_sdk.js"></script>
+    <script type="text/javascript" src="bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="tinycolor.min.js"></script>
+    <script type="text/javascript" src="bootstrap.colorpickersliders.min.js"></script>
+    <script src="stats.min.js"></script>
+    <script src="2d.js"></script>
+    
+</body>
+
+</html>

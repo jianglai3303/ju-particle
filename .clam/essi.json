@@ -1,0 +1,21 @@
+{
+  "charset": "gbk",
+  "assetsCharset": "utf-8",
+  "css": ".css",
+  "js": ".js",
+  "cdnPath": "",
+  "version": "",
+  "sourcemap": false,
+  "random": false,
+  "replaces": {},
+  "remote": {},
+  "hosts": {},
+  "filter": {},
+  "supportedFile": [],
+  "ignoreTokens": [],
+  "ignoreJuicer": [],
+  "ignorePretty": [],
+  "native2ascii": false,
+  "cache": true,
+  "strictPage": false
+}
